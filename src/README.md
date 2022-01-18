@@ -1,0 +1,2 @@
+# Pricing service app (monolith)
+
