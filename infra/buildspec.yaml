@@ -5,6 +5,8 @@ env:
   variables:
     DOCKER_PASSWORD: remoteRepositorieKeys:GitHub_key
     DOCKER_USERNAME: "manrodri"
+    IMAGE_REPO_NAME: price-tracking-app
+
 
 phases:
   pre_build:
@@ -16,6 +18,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - cd ./src
+      # genereate some random value for IMAGE_TAG
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
   post_build:
     commands:
