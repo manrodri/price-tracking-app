@@ -3,17 +3,19 @@ import requests
 from bs4 import BeautifulSoup
 from typing import Dict
 import uuid
-from common.database import Database
+from models.model import Model
 
 
-class Item:
-    def __init__(self, url: str, tag_name: str, query: Dict, _id: str = None, cookies: Dict = {}):
+class Item(Model):
+
+    collection = 'items'
+
+    def __init__(self, url: str, tag_name: str, query: Dict, _id: str = None,  *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.url = url
         self.tag_name = tag_name
         self.query = query
         self.price = None
-        self.cookies = cookies
-        self.collection = 'items'
         self._id = _id or uuid.uuid4().hex
 
     def __repr__(self):
@@ -46,6 +48,3 @@ class Item:
             "price": self.price
 
         }
-
-    def save_to_mongo(self):
-        Database.insert(self.collection, self.json())
