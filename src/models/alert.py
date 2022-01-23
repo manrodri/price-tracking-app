@@ -9,11 +9,11 @@ class Alert(Model):
 
     collection = 'alerts'
 
-    def __init__(self, item_id: str, price_threshold: float, _id: str = None, *args, **kwargs):
+    def __init__(self, item_id: str, price_limit: float, _id: str = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.item_id = item_id
         self.item = Item.get_by_id(item_id)
-        self.price_threshold = price_threshold
+        self.price_limit = price_limit
         self._id = uuid.uuid4().hex
 
     def __repr__(self):
@@ -22,7 +22,7 @@ class Alert(Model):
     def json(self) -> Dict:
         return {
             "_id": self._id,
-            "price_threshold": self.price_threshold,
+            "price_limit": self.price_limit,
             "item_id": self.item_id
         }
 
@@ -32,8 +32,8 @@ class Alert(Model):
 
     def notify_if_price_reached(self):
         # email functionality to be implemented for now jsut prints out a message
-        if self.item.price < self.price_threshold:
-            print(f"Item {self.item} price is below {self.price_threshold}!! \n")
+        if self.item.price < self.price_limit:
+            print(f"Item {self.item} price is below {self.price_limit}!! \n")
             print(f"Latest price: {self.item.price}\n")
 
 
