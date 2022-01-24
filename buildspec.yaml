@@ -5,7 +5,8 @@ env:
   variables:
     DOCKER_PASSWORD: remoteRepositorieKeys:GitHub_key
     DOCKER_USERNAME: "manrodri"
-    IMAGE_REPO_NAME: price-tracking-app
+    IMAGE_REPO_NAME: "manrodri/price-service"
+    DB_CONNECTION_STRING: remoteRepositorieKeys:mongoAtlasConnectionString
 
 
 phases:

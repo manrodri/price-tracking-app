@@ -1,5 +1,4 @@
 from flask import Blueprint, request, render_template
-import json
 from models.alert import Alert
 
 alert_blueprint = Blueprint('alerts', __name__)
