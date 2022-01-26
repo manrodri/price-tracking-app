@@ -5,6 +5,7 @@ import pymongo
 class Database:
 
     URI = os.environ['DB_CONNECTION_STRING']
+    # URI =  URI = "mongodb://127.0.0.1:27017/price-app"
     DATABASE = pymongo.MongoClient(URI).get_default_database()
 
     @staticmethod

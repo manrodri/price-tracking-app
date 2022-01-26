@@ -5,7 +5,7 @@ export DB_CONNECTION_STRING="mongodb://127.0.0.1:27017/price-app"
 mongod --dbpath=${DATA_DIR}
 
 
-export db_user=db_admin
+export db_user=db_admini
 export db_password=CrJKaHXDP7js5nDc
 
-mongodb+srv://db_admin:CrJKaHXDP7js5nDc@cluster0.eazeo.mongodb.net/test
+#mongodb+srv://db_admini:CrJKaHXDP7js5nDc@cluster0.eazeo.mongodb.net/test
