@@ -16,6 +16,9 @@ class Store(Model):
         self.query = query
         self._id = _id or uuid.uuid4().hex
 
+    def __repr__(self):
+        return f"<Store: {self._id}>"
+
     def json(self) -> Dict:
         return {
             "_id": self._id,
@@ -32,6 +35,8 @@ class Store(Model):
     @classmethod
     def get_by_url_prefix(cls,url_prefix: str) -> "Store":
         url_regex = {"$regex": "^{}".format(url_prefix)}
+        print(f"url_prefix: {url_prefix}")
+        print(f"store collection: {cls.collection}")
         return cls.find_one_by("url_prefix", url_regex)
 
     @classmethod
@@ -43,3 +48,11 @@ class Store(Model):
         '''
 
         pattern = re.compile(r'(https?://.*?/)')
+        match = pattern.search(url)
+        url_prefix = match.group(1)
+        print(f"url_prefix found: {url_prefix}")
+        return cls.get_by_url_prefix(url_prefix)
+
+
+
+

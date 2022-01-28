@@ -26,7 +26,7 @@ class Alert(Model):
             "item_id": self.item_id
         }
 
-    def load_item_price(self) -> float:
+    def load_item_price(self) -> float:  # not working
         self.item.load_price()
         return self.item.price
 
