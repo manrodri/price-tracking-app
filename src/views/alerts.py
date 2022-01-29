@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, redirect, url_for
 from models.alert import Alert
 from models.item import Item
 from models.store import Store
@@ -29,3 +29,19 @@ def new_alert():
         Alert(alert_name, item_id, float(prince_limit)).save_to_mongo()
 
     return render_template('alerts/new_alert.html')
+
+
+@alert_blueprint.route("/edit/<string:alert_id>", methods=['GET', 'POST'])
+def edit_alert(alert_id):
+    alert = Alert.get_by_id(alert_id)
+
+    if request.method == 'POST':
+        price_limit = request.form['price_limit']
+        alert.price_limit = price_limit
+
+        alert.save_to_mongo()
+        redirect(url_for('.index'))
+
+    return render_template('alerts/edit_alert.html', alert=alert)
+
+
