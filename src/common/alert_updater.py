@@ -1,12 +1,9 @@
 from models.alert import Alert
 
 alerts = Alert.all()
-print(f"Alerts: {alerts}")
 
 for alert in alerts:
-
-
-    alert.load_item_price()  # there must be a relation Alert/item
+    alert.load_item_price()
     alert.notify_if_price_reached()  # think about how to send notifications and to who? (user)
 
 if not alerts:

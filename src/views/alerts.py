@@ -16,18 +16,16 @@ def index():
 def new_alert():
     if request.method == 'POST':
         item_url = request.form['item_url']
-        print(f"item_url: {item_url}")
         prince_limit = float(request.form['price_limit'])
-        print(f"limit: {prince_limit}")
+        alert_name = request.form['alert_name']
 
         store = Store.find_by_url(item_url)
-        print(f"store: {store.__repr__()}")
-        print(f"store.tag_name: {store.tag_name}")
-        print(f"store.query: {store.query}")
+
         item = Item(item_url, store.tag_name, store.query)
+        item.load_price()
         item.save_to_mongo()
         item_id = item._id
 
-        Alert(item_id, float(prince_limit)).save_to_mongo()
+        Alert(alert_name, item_id, float(prince_limit)).save_to_mongo()
 
     return render_template('alerts/new_alert.html')
