@@ -4,3 +4,8 @@ data/
 !/infra/todo.md
 Pipfile
 Pipfile.lock
+/infra/terraform/.terraform.lock.hcl
+/infra/terraform/infra.tfplan
+/infra/terraform/terraform.tfstate
+/infra/terraform/terraform.tfstate.backup
+/infra/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/3.73.0/darwin_amd64/terraform-provider-aws_v3.73.0_x5
