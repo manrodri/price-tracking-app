@@ -13,9 +13,12 @@
                         (last price: {{ alert.item.price }})</a>
                 </p>
             <a href="{{url_for('alerts.edit_alert', alert_id=alert._id)}}" class="btn btn-secondary">Edit</a>
+            <a href="{{url_for('alerts.delete_alert', alert_id=alert._id)}}" class="btn btn-danger">Delete permanently</a>
+
             </div>
         {% endfor %}
     </div>
     <a href="{{url_for('alerts.new_alert')}}" class="btn btn-primary">Create new</a>
+
 </section>
 {% endblock %}

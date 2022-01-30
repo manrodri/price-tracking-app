@@ -45,3 +45,11 @@ def edit_alert(alert_id):
     return render_template('alerts/edit_alert.html', alert=alert)
 
 
+@alert_blueprint.route("/delete/<string:alert_id>")
+def delete_alert(alert_id):
+    alert = Alert.get_by_id(alert_id)
+    alert.remove_from_mongo()
+    redirect(url_for('.index'))
+
+
+
