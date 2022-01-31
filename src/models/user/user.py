@@ -36,8 +36,15 @@ class User(Model):
             user = cls.find_by_email(email)
             raise UserErrors.UserAlreadyRegisteredError("The e-mail you used to register already exists.")
         except UserErrors.UserNotFoundError:
-            User(email, password).save_to_mongo()
+            User(email, Utils.hash_password(password)).save_to_mongo()
 
+        return True
+
+    @classmethod
+    def is_login_valid(cls, email:str, password:str):
+        user = cls.find_by_email(email)
+        if not Utils.check_hashed_password(password, user.password):
+            raise UserErrors.IncorrectPassword('An error occurred')
         return True
 
     def json(self) -> Dict:
