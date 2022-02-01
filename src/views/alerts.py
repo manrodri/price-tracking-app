@@ -9,7 +9,7 @@ alert_blueprint = Blueprint('alerts', __name__)
 @alert_blueprint.route('/')
 def index():
     print(session['email'])
-    alerts = Alert.all()
+    alerts = Alert.find_many_by('user_email', session['email'])
     return render_template('alerts/index.html', alerts=alerts)
 
 
@@ -27,7 +27,7 @@ def new_alert():
         item.save_to_mongo()
         item_id = item._id
 
-        Alert(alert_name, item_id, float(prince_limit)).save_to_mongo()
+        Alert(alert_name, item_id, float(prince_limit), session['email']).save_to_mongo()
 
     return render_template('alerts/new_alert.html')
 
@@ -37,11 +37,12 @@ def edit_alert(alert_id):
     alert = Alert.get_by_id(alert_id)
 
     if request.method == 'POST':
-        price_limit = request.form['price_limit']
-        alert.price_limit = price_limit
+        if alert.user_email == session['email']:
+            price_limit = request.form['price_limit']
+            alert.price_limit = price_limit
 
-        alert.save_to_mongo()
-        redirect(url_for('.index'))
+            alert.save_to_mongo()
+            return redirect(url_for('.index'))
 
     return render_template('alerts/edit_alert.html', alert=alert)
 
@@ -49,8 +50,9 @@ def edit_alert(alert_id):
 @alert_blueprint.route("/delete/<string:alert_id>")
 def delete_alert(alert_id):
     alert = Alert.get_by_id(alert_id)
-    alert.remove_from_mongo()
-    redirect(url_for('.index'))
+    if alert.user_email == session['email']:
+        alert.remove_from_mongo()
+    return redirect(url_for('.index'))
 
 
 
