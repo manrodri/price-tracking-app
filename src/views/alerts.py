@@ -2,11 +2,13 @@ from flask import Blueprint, request, render_template, redirect, url_for, sessio
 from models.alert import Alert
 from models.item import Item
 from models.store import Store
+from models.user import requires_login
 
 alert_blueprint = Blueprint('alerts', __name__)
 
 
 @alert_blueprint.route('/')
+@requires_login
 def index():
     print(session['email'])
     alerts = Alert.find_many_by('user_email', session['email'])
@@ -14,6 +16,7 @@ def index():
 
 
 @alert_blueprint.route('/new', methods=['GET', 'POST'])
+@requires_login
 def new_alert():
     if request.method == 'POST':
         item_url = request.form['item_url']
@@ -33,6 +36,7 @@ def new_alert():
 
 
 @alert_blueprint.route("/edit/<string:alert_id>", methods=['GET', 'POST'])
+@requires_login
 def edit_alert(alert_id):
     alert = Alert.get_by_id(alert_id)
 
@@ -48,6 +52,7 @@ def edit_alert(alert_id):
 
 
 @alert_blueprint.route("/delete/<string:alert_id>")
+@requires_login
 def delete_alert(alert_id):
     alert = Alert.get_by_id(alert_id)
     if alert.user_email == session['email']:
