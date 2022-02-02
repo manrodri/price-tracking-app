@@ -18,14 +18,3 @@ app.register_blueprint(user_blueprint, url_prefix='/users')
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-def send_simple_message():
-    return requests.post(
-        "https://api.mailgun.net/v3/YOUR_DOMAIN_NAME/messages",
-        auth=("api", f"{YOUR_API_KEY}"),
-        data={"from": f"Excited User mailgun@{YOUR_DOMAIN_NAME}",
-              "to": ["lolo.edinburgh@gmail.com"],
-              "subject": "Hello",
-              "text": "Testing some Mailgun awesomness!"})
