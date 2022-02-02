@@ -30,7 +30,13 @@ def login_user():
         try:
             if User.is_login_valid(email, password):
                 session['email'] = email
-                return email
+                return render_template('alerts/index.html')
         except errors.UserError as e:
             return e.message
     return render_template('users/login.html')
+
+
+@user_blueprint.route('/logout')
+def logout_user():
+    session['email'] = None
+    return redirect(url_for('.login_user'))

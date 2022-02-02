@@ -7,6 +7,9 @@ from views.users import user_blueprint
 app = Flask(__name__)
 
 app.secret_key = os.urandom(64)
+app.config.update(
+    ADMIN=os.environ['ADMIN']
+)
 
 app.register_blueprint(alert_blueprint, url_prefix='/alerts')
 app.register_blueprint(store_blueprint, url_prefix='/stores')
@@ -16,3 +19,13 @@ app.register_blueprint(user_blueprint, url_prefix='/users')
 if __name__ == '__main__':
     app.run(debug=True)
 
+
+
+def send_simple_message():
+    return requests.post(
+        "https://api.mailgun.net/v3/YOUR_DOMAIN_NAME/messages",
+        auth=("api", f"{YOUR_API_KEY}"),
+        data={"from": f"Excited User mailgun@{YOUR_DOMAIN_NAME}",
+              "to": ["lolo.edinburgh@gmail.com"],
+              "subject": "Hello",
+              "text": "Testing some Mailgun awesomness!"})

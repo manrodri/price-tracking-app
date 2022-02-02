@@ -8,6 +8,7 @@ flask = "*"
 requests = "*"
 beautifulsoup4 = "*"
 tabulate = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
