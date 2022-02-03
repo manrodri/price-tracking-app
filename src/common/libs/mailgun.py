@@ -1,6 +1,9 @@
 from requests import Response, post
 import os
 from typing import List
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class MailgunException(Exception):
@@ -33,13 +36,15 @@ class Mailgun:
                   "html": html,
                   })
         if response.status_code != 200:
-            print(response.json())
+            print(response)
             raise MailgunException("An error occurred while sending emails")
 
         return response
 
 
 if __name__ == '__main__':
+    print(os.environ['KEY'])
+    print(os.environ['DOMAIN_NAME'])
     Mailgun.send_email(['lolo.edinburgh@gmail.com'],
                        "Hello",
                        "This is a test",

@@ -1,4 +1,6 @@
 from models.alert import Alert
+import os
+
 
 alerts = Alert.all()
 

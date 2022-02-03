@@ -1,3 +1,4 @@
+import os
 import uuid
 from typing import Dict
 from dataclasses import dataclass, field
@@ -41,14 +42,11 @@ class Alert(Model):
     def notify_if_price_reached(self):
         # email functionality to be implemented for now jsut prints out a message
         if self.item.price < self.price_limit:
-            print(f"Item {self.item} price is below {self.price_limit}!! \n")
-            print(f"Latest price: {self.item.price}\n")
 
-            Mailgun.send_email(
+            response = Mailgun.send_email(
                 email=[self.user_email],
                 subject=f"Notification for {self.name}",
                 text=f"Your alert {self.name} has reached a price under {self.price_limit}. The latest price is {self.item.price}. Go to this address to check your item: {self.item.url}.",
                 html=f'<p>Your alert {self.name} has reached a price under {self.price_limit}.</p><p>The latest price is {self.item.price}. Check your item out <a href="{self.item.url}>here</a>.</p>',
             )
-
-
+            print(f"email sent. maingule response status_code: {response.status_code}")
